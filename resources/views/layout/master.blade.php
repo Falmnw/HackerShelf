@@ -4,32 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+
+<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">HackerShelf</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{route('catalogue')}}">Catalogue</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('addproduct') }}">Add Product</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
+
+        <a class="navbar-brand" href="#">HackerShelf</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                {{-- HOME / ADMIN CATALOGUE --}}
+
+                
+                <li class="nav-item">
+                    @auth
+                        @if(auth()->user()->role === 'admin')
+                            <a class="nav-link" href="{{ route('catalogue') }}">Admin Catalogue</a>
+                        @else
+                            <a class="nav-link" href="{{ route('seeHome') }}">Home</a>
+                        @endif
+                    @endauth
+
+                    @guest
+                        <a class="nav-link" href="{{ route('seeHome') }}">Home</a>
+                    @endguest
+
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ route('about') }}">About</a>
+                        </li>
+
+                      {{-- FAQ PAGE (Everyone can access) --}}
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ route('faq') }}">FAQ</a>
+                      </li>
+
+                </li>
+
+                  {{-- ADD PRODUCT (ONLY WHEN LOGGED IN) --}}
+                @auth
+                @if(auth()->user()->role !== 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('addproduct') }}">Add Product</a>
+                    </li>
+                @endif
+            @endauth  
+
+            </ul>
+
+
+            {{-- PROFILE BUTTON --}}
+            @auth
+                @if(auth()->user()->role !== 'admin')
+                <a class="btn btn-outline-light me-2" href="{{ route('profile') }}">
+                    {{ auth()->user()->username ?? 'Profile' }}
+                </a>
+                @endif
+            @endauth
+
+            @guest
+                <a class="btn btn-outline-light me-2" href="{{ route('seeLogin') }}">
+                    Guest (Login)
+                </a>
+            @endguest
+
+
+            {{-- LOGOUT BUTTON (ONLY VISIBLE WHEN LOGGED IN) --}}
+            @auth
+            <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                @csrf
+                <button class="btn btn-danger" type="submit">Logout</button>
+            </form>
+            @endauth
+
+        </div>
     </div>
-  </nav>
-  @yield('content')
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-  </body>
+</nav>
+
+@yield('content')
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

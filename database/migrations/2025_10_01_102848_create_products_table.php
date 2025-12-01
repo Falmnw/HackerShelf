@@ -15,9 +15,16 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('category');
-            $table->text('description');
+            $table->string('version');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->text('description')->nullable(); 
+            $table->text('installation_steps')->nullable(); 
+            $table->string('tool_document');
             $table->string('picture')->nullable();
+            $table->string('status');
         });
     }
 

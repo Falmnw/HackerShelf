@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
+
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -15,8 +18,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('catalogue', compact('products'));
+        $allproducts = Product::where('status','pending')->get();
+        return view('admin.catalogue.index', compact('allproducts'));
+    }
+
+    public function show($id){
+        $product = Product::findOrFail($id);
+        return view('admin.catalogue.show',compact('product'));
     }
 
     /**
@@ -24,7 +32,8 @@ class ProductController extends Controller
      */
     public function add()
     {
-        return view('addproduct');
+    $categories = Category::all();
+    return view('user.addproduct', compact('categories'));
     }
 
     public function create(Request $req)
@@ -34,14 +43,40 @@ class ProductController extends Controller
             $picturePath = $req->file('picture')->store('products','public');
         }
 
+        $documentPath = null;
+        if($req->hasFile('tool_document')){
+            $documentPath = $req->file('tool_document')->store('documents','public');
+        }
+
         Product::create([
             'name' => $req->name,
-            'category' => $req->category,
+            'version' => $req->version,
+            'category_id' => $req->category_id,
+            'user_id' => auth()->id(),
             'description' => $req->description,
-            'picture' => $picturePath
+            'installation_steps' =>$req->installation_steps,
+            'tool_document' => $documentPath,
+            'picture' => $picturePath,
+            'status' =>'pending'
         ]);
 
-        return back()->with('success', 'Product added successfully!'); }
+        return back()->with('success', 'Product added successfully!'); 
+    }
+
+    public function publish($id){
+        $product = Product::findOrFail($id);
+        $product->status = 'approved';
+        $product->save();
+        return redirect()->route('catalogue');
+    }
+
+    public function reject($id){
+        $product = Product::findOrFail($id);
+        $product->status='rejected';
+        $product->save();
+         return redirect()->route('catalogue');
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -54,19 +89,19 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
-    {
-        //
-    }
+    // public function show(Product $product)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
-    {
-        $product = Product::findOrFail($id);
-        return view('updateproduct', compact('product'));
-    }
+    // public function edit($id)
+    // {
+    //     $product = Product::findOrFail($id);
+    //     return view('updateproduct', compact('product'));
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -78,15 +113,24 @@ class ProductController extends Controller
             $picturePath = $req->file('picture')->store('products','public');
         }
 
+        $documentPath = null;
+        if($req->hasFile('tool_document')){
+            $documentPath = $req->file('tool_document')->store('documents','public');
+        }
+
         Product::findOrFail($id)->update([
             'name' => $req->name,
-            'category' => $req->category,
+            'version' => $req->version,
+            'category_id' => $req->category_id,
             'description' => $req->description,
+            'installation_steps' =>$req->installation_steps,
+            'tool_document' => $documentPath,
+
             'picture' => $picturePath
         ]);
 
-        $products = Product::all();
-        return view('catalogue', compact('products'));
+        $allproducts = Product::all();
+        return view('catalogue', compact('allproducts'));
     }
 
     /**
@@ -97,4 +141,16 @@ class ProductController extends Controller
         Product::destroy($id);
         return back();
     }
+
+    public function showCategory($id){
+        $category = Category::findOrFail($id);
+        $products = Product::where('category_id', $id)->where('status','approved')->get();
+        return view('product.list', compact('category','products')); 
+    }
+    public function showdetail($category_id, $product_id){
+         $product = Product::findOrFail($product_id);
+
+         return view('product.showdetail', compact('product'));
+    }
+
 }
