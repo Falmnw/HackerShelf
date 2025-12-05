@@ -1,6 +1,10 @@
 @extends('layout.master')
 @section('title', 'catalogue')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/style-dashboard.css') }}">
+@endpush
+
 @section('content')
 <div class="container mt-5">
     <div class="row">

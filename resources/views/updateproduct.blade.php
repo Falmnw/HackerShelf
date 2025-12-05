@@ -1,6 +1,10 @@
 @extends('layout.master')
 @section('title', 'update product')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/style-dashboard.css') }}">
+@endpush
+
 @section('content')
     <div class="col-md-6 offset-md-3 mt-5">
         <h1>Update Product</h1>

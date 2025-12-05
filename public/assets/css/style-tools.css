@@ -1,0 +1,268 @@
+@import url('https://cdn.vercel.app/geist/1.0.0/geist.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Geist', sans-serif;
+}
+
+/* Scope semua ke .tools-page */
+.tools-page {
+    background: linear-gradient(
+        180deg,
+        #AA661C 0%,
+        #8A4E18 2%,
+        #6A3A14 5%,
+        #4A2810 10%,
+        #2A1608 20%,
+        #1A0F03 40%,
+        #000000 100%
+    );
+    color: #fff;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.tools-page .hero-section {
+    padding: 100px 0 80px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.tools-page .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.tools-page .section-title {
+    font-size: 64px;
+    font-weight: 400;
+    background: linear-gradient(180deg, #716C66, #DBA890, #FFE4C7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.tools-page .hero-sub {
+    font-size: 20px;
+    color: #ccc;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.tools-page .search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 30px auto 0;
+}
+
+.tools-page .search-bar {
+    width: 100%;
+    padding: 14px 20px 14px 50px;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 30px;
+    color: rgba(255, 255, 255);
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.tools-page .search-bar:focus {
+    border-color: white;
+    box-shadow: 0 0 15px rgba(255, 228, 199, 0.3);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.tools-page .search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.tools-page .search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 18px;
+}
+
+.tools-page .tools-grid-container {
+    margin-top: 60px;
+}
+
+.tools-page .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.tools-page .tool-card {
+    background: linear-gradient(180deg, #402100, #AA661C);
+    border-radius: 12px;
+    padding: 30px;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    min-height: 380px;
+}
+
+.tools-page .tool-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(202, 110, 10, 0.3);
+    border-color: rgba(202, 110, 10, 0.5);
+}
+
+.tools-page .tool-logo-container {
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    background: rgba(80, 39, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 10px;
+}
+
+.tools-page .tool-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.tools-page .tool-name {
+    font-size: 28px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.tools-page .tool-category {
+    font-size: 16px;
+    color: rgba(255, 228, 199, 0.9);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 6px 16px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 228, 199, 0.2);
+    display: inline-block;
+}
+
+@media (max-width: 992px) {
+    .tools-page .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .tools-page .section-title {
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tools-page .hero-section {
+        padding: 80px 0 60px;
+    }
+
+    .tools-page .section-title {
+        font-size: 36px;
+    }
+
+    .tools-page .hero-sub {
+        font-size: 16px;
+    }
+
+    .tools-page .search-container {
+        max-width: 100%;
+    }
+
+    .tools-page .tools-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .tools-page .tool-card {
+        min-height: 300px;
+        padding: 25px 20px;
+    }
+
+    .tools-page .tool-logo-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .tools-page .tool-name {
+        font-size: 22px;
+    }
+
+    .tools-page .tool-category {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tools-page .hero-section {
+        padding: 70px 0 50px;
+    }
+
+    .tools-page .section-title {
+        font-size: 28px;
+    }
+
+    .tools-page .hero-sub {
+        font-size: 14px;
+    }
+
+    .tools-page .search-bar {
+        font-size: 14px;
+        padding: 12px 18px 12px 45px;
+    }
+
+    .tools-page .search-icon {
+        left: 15px;
+        font-size: 16px;
+    }
+
+    .tools-page .tools-grid {
+        gap: 15px;
+    }
+
+    .tools-page .tool-card {
+        min-height: 250px;
+        padding: 20px 15px;
+    }
+
+    .tools-page .tool-logo-container {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+
+    .tools-page .tool-name {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .tools-page .tool-category {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+}

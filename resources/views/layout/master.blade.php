@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logo-apk-hci.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/css/style-dashboard.css') }}">
+    @stack('styles')
 </head>
 <body>
   <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -26,15 +27,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('addproduct') }}">Add Product</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('aboutus') }}">About Us</a>
+                </li>
             </ul>
-            <form class="d-flex mx-auto" style="position: absolute; left: 50%; transform: translateX(-50%); max-width:400px;" role="search">
+
+            {{-- <form class="d-flex mx-auto" style="position: absolute; left: 50%; transform: translateX(-50%); max-width:400px;" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                 <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            </form> --}}
+
             <li class="nav-item">
-                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                <form action="{{ route('profile') }}" method="POST" class="d-inline">
                     @csrf
-                    <button type="submit" class="btn btn-danger">Logout</button>
+                    <button type="submit" class="btn btn-light">Profile</button>
                 </form>
             </li>
         </div>
