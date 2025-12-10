@@ -20,6 +20,8 @@ Route::delete('/product/delete/{id}', [ProductController::class, 'destroy'])->na
 
 Route::view('/about-us', 'aboutus')->name('aboutus');
 
+Route::view('/home', 'home')->name('home');
+
 Route::view('/profile', 'profile')->name('profile')->middleware('simple.auth');
 
 Route::view('/tools', 'tools')->name('tools')->middleware('simple.auth');

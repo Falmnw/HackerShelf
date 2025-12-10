@@ -6,47 +6,72 @@
     <title>@yield('title')</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/images/logo-apk-hci.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://cdn.vercel.app/geist/1.0.0/geist.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/style-navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style-dashboard.css') }}">
     @stack('styles')
 </head>
 <body>
-  <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" href="#">
-            <img src="{{ asset('assets/images/logo-apk-hci.png') }}" alt="logo" class="logo-apk me-2" style="height:40px;">
-            <span>HackerShelf</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('catalogue')}}">Catalogue</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('addproduct') }}">Add Product</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('aboutus') }}">About Us</a>
-                </li>
-            </ul>
-
-            {{-- <form class="d-flex mx-auto" style="position: absolute; left: 50%; transform: translateX(-50%); max-width:400px;" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form> --}}
-
-            <li class="nav-item">
-                <form action="{{ route('profile') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-light">Profile</button>
-                </form>
-            </li>
-        </div>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="{{ asset('assets/images/logo-apk-hci.png') }}" class="logo-img" alt="HackerShelf Logo">
     </div>
-    </nav>
+
+    <ul class="menu">
+      <li><a href="{{ route('home') }}">Home</a></li>
+      <li><a href="{{ route('catalogue') }}">Tools</a></li>
+      <li><a href="{{ route('addproduct') }}">Add Product</a></li>
+      <li><a href="{{ route('uploadtool') }}">Deploy Tools</a></li>
+      <li><a href="{{ route('aboutus') }}">About</a></li>
+    </ul>
+
+    <div class="navbar-right">
+      <form action="{{ route('profile') }}" method="POST" class="profile-form">
+        @csrf
+        <button type="submit" class="profile-btn">
+          <i class="fas fa-user"></i> Profile
+        </button>
+      </form>
+    </div>
+  </nav>
+
   @yield('content')
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-  </body>
+  @stack('scripts')
+</body>
+
+<footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="assets/images/logo-apk-hci.png" alt="Hackershelf Logo">
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="X (Twitter)"><img src="assets/images/x-logo.png" alt="X"></a>
+                <a href="#" aria-label="Instagram"><img src="assets/images/instagram-logo.png" alt="Instagram"></a>
+                <a href="#" aria-label="YouTube"><img src="assets/images/youtube-logo.png" alt="YouTube"></a>
+                <a href="#" aria-label="LinkedIn"><img src="assets/images/linkedin-logo.png" alt="LinkedIn"></a>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Category</h4>
+                    <ul>
+                        <li><a href="#">Forensic</a></li>
+                        <li><a href="#">Binary Exploitation</a></li>
+                        <li><a href="#">OSINT</a></li>
+                        <li><a href="#">Reverse Engineer</a></li>
+                        <li><a href="#">Cryptography</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Section</h4>
+                    <ul>
+                        <li><a href="#">Tools</a></li>
+                        <li><a href="#">About Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
 </html>
