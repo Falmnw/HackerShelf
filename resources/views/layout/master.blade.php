@@ -125,13 +125,25 @@
         <li><a href="{{ route('seeHome') }}">Home</a></li>
       @endif
       <li><a href="{{ route('seeHome') }}#categoryCarousel">Tools</a></li>
-      <li><a href="{{ route('addproduct') }}">Add Tool</a></li>
       {{-- <li><a href="{{ route('addproduct') }}">Deploy Tools</a></li> --}}
       <li><a href="{{ route('about') }}">About</a></li>
     </ul>
-
+    
     <div class="navbar-right">
       @auth
+        @if(Auth::user()->role === 'admin')
+          <div style="position: relative;">
+            <a href="{{ route('catalogue') }}" class="profile-btn">
+              @php
+                $newToolsCount = \App\Models\Product::where('status', 'pending')->count();
+              @endphp
+              @if($newToolsCount > 0)
+                <span class="badge badge-danger">+{{ $newToolsCount }}</span>
+              @endif
+              <i class="fas fa-cog"></i> Admin Panel
+            </a>
+          </div>
+        @endif
         <a href="{{ route('profile') }}" class="profile-btn">
           <i class="fas fa-user"></i> Profile
         </a>

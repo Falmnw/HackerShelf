@@ -142,9 +142,17 @@
 
               // Sort based on current sort option
               if (currentSort === 'liked') {
-                filtered.sort((a, b) => parseInt(b.getAttribute('data-likes')) - parseInt(a.getAttribute('data-likes')));
+                filtered.sort((a, b) => {
+                  const likesA = parseInt(a.getAttribute('data-likes')) || 0;
+                  const likesB = parseInt(b.getAttribute('data-likes')) || 0;
+                  return likesB - likesA;
+                });
               } else if (currentSort === 'bookmarked') {
-                filtered.sort((a, b) => parseInt(b.getAttribute('data-bookmarks')) - parseInt(a.getAttribute('data-bookmarks')));
+                filtered.sort((a, b) => {
+                  const bookmarksA = parseInt(a.getAttribute('data-bookmarks')) || 0;
+                  const bookmarksB = parseInt(b.getAttribute('data-bookmarks')) || 0;
+                  return bookmarksB - bookmarksA;
+                });
               }
 
               // Reorder DOM elements based on filtered/sorted array
@@ -162,7 +170,7 @@
               });
 
               // Show/hide empty message
-              if (searchTerm && filtered.length === 0 && emptyMessage) {
+              if (filtered.length === 0 && emptyMessage) {
                 emptyMessage.style.display = 'block';
               } else if (emptyMessage) {
                 emptyMessage.style.display = 'none';
